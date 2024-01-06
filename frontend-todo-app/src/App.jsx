@@ -28,13 +28,7 @@ function App() {
       </div>
 
       {todo.map((todo) => {
-        return (
-          <div>
-            {todo.title}
-            {todo.description}
-            <br />
-          </div>
-        );
+        return <Todo title={todo.title} description={todo.description}></Todo>
       })}
 
       <div>
@@ -42,8 +36,16 @@ function App() {
           GitHub
         </a>
       </div>
-
     </>
+  );
+}
+
+function Todo(props) {
+  return (
+    <div>
+      {props.title}
+      {props.description}
+    </div>
   );
 }
 
