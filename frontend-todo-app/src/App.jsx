@@ -1,24 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [todo, setTodo] = useState([
-    {
-      id: 1,
-      title: "College",
-      description: "In college from 8 to 2.",
-    },
-    {
-      id: 2,
-      title: "Meeting",
-      description: "Attend meeting from 5 to 6.",
-    },
-    {
-      id: 3,
-      title: "Coding",
-      description: "Code till 11.",
-    },
-  ]);
+  const [todos, setTodo] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch("http://localhost:3000/todos", {
+      method: "GET"
+    }).then((response) => {
+      response.json().then((data) => {
+        console.log(data);
+        setTodo(data);
+      })
+    });
+  });
 
   return (
     <>
@@ -27,8 +22,15 @@ function App() {
         <h3>Hi there👋</h3>
       </div>
 
-      {todo.map((todo) => {
-        return <Todo title={todo.title} description={todo.description}></Todo>
+      {todos.map(todos => {
+        return (
+          <div>
+            {todos.todoTitle}
+            {todos.todoDescription}
+            <button>Delete</button>
+            <br />
+          </div>
+        );
       })}
 
       <div>
@@ -37,15 +39,6 @@ function App() {
         </a>
       </div>
     </>
-  );
-}
-
-function Todo(props) {
-  return (
-    <div>
-      {props.title}
-      {props.description}
-    </div>
   );
 }
 
